@@ -1,4 +1,4 @@
-package com.example.springboot;
+package com.drivers.application;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,5 +10,8 @@ public class HelloController {
 	public String index() {
 		return "Greetings from Spring Boot!";
 	}
-
+	@GetMapping("/test")
+	public String test(){
+		return "Sending Message from Text";
+	}
 }
