@@ -2,6 +2,7 @@ package com.drivers.application.model;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,21 +26,19 @@ import lombok.NoArgsConstructor;
 public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "driver_id", unique = true, nullable = false)
-    Integer DriverId;
+    @Column(name = "driverId", unique = true, nullable = false)
+    Integer driverId;
     @Column(name = "name", unique = false, nullable = false)
-    String Name;
-    public Driver getDriver(){
-        return this;
-    }
+    String name;
+    @JsonIgnore
     public Integer getDriverId(){
-        return this.DriverId;
+        return this.driverId;
     }
     public String getName(){
-        return this.Name;
+        return this.name;
     }
-    /* @Override 
+     @Override 
     public String toString(){
-        
-    } */
+      return "[Object]"  ;
+    } 
 }
