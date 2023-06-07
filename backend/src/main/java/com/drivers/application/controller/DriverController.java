@@ -1,33 +1,46 @@
 package com.drivers.application.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.drivers.application.dao.DriverRepo;
 import com.drivers.application.model.Driver;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class DriverController {
     @Autowired
     DriverRepo repo;
     @GetMapping("/list-drivers-json")
-    public List<Driver> list_drivers_json(){
-        return repo.findAll();
+    @ResponseBody
+    public String list_drivers_json(){
+        try {
+            ObjectMapper obmapper=new ObjectMapper();
+            List<Driver> drivers=repo.findAll();
+            String JsonString="";
+            Iterator<Driver> driverIterator=drivers.iterator();
+            while(driverIterator.hasNext()){
+                JsonString+=obmapper.writeValueAsString(driverIterator.next());
+            }
+            return JsonString;
+        }catch(Exception e){
+            return "[object Object]";
+        }
+        
     }
     @GetMapping("/list-drivers")
-    public ModelAndView list_drivers() {
-        ModelAndView mv = new ModelAndView();
-        System.out.println("IN Controller " + repo.findAll());
-        mv.addObject("drivers", repo.findAll());
-        mv.addObject("data","Data test");
-        mv.setViewName("DriversList");
-        return mv;
+    public String list_drivers() {
+        return "IN Controller " + repo.findAll();
+        //return "HI";
+        //return mv;
     }
 
     @PostMapping("/add-driver")
@@ -39,10 +52,10 @@ public class DriverController {
     }
 
     @GetMapping("/add-driver")
-    public ModelAndView show_driver(Integer DriverId) {
+    public String show_driver(Integer DriverId) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("AddDriverForm");
-        return mv;
+        return "Test";
     }
 
     @GetMapping("/update-driver/{:id}")

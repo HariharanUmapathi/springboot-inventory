@@ -11,7 +11,8 @@
 
 <body>
     <h1>
-        ${data}
+        Sum Result : ${result}
+       <!--  ${data}
         Here comes Driver List</h1></br>
         <c:set var="i" value="0">
         <c:out value="{$i+1}" />
@@ -19,7 +20,7 @@
             ${i++}
             Name: ${entry.DriverId} <br />
             Value: ${entry.Name} <br />
-        </c:forEach>
+        </c:forEach> -->
     </h1>
 </body>
 
