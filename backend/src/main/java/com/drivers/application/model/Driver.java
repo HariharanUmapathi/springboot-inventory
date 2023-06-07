@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="DRIVERS")
+@Table(name="Driver")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Driver implements Serializable {
     @Id
