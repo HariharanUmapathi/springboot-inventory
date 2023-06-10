@@ -2,9 +2,8 @@ package com.drivers.application.model;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +21,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name="Driver")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Driver implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +28,6 @@ public class Driver implements Serializable {
     Integer driverId;
     @Column(name = "name", unique = false, nullable = false)
     String name;
-    @JsonIgnore
     public Integer getDriverId(){
         return this.driverId;
     }
