@@ -2,9 +2,6 @@ package com.drivers.application.model;
 
 import java.io.Serializable;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,22 +17,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="Driver")
-public class Driver implements Serializable {
+@Table(name = "Vehicle")
+public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "driverId", unique = true, nullable = false)
-    Integer driverId;
-    @Column(name = "name", unique = false, nullable = false)
+    @Column(name = "vehicleId", unique = true, nullable = false)
+    Integer vehicleId;
+    @Column(name = "registerNo", unique = false, nullable = false)
     String name;
-    public Integer getDriverId(){
-        return this.driverId;
-    }
-    public String getName(){
-        return this.name;
-    }
-     @Override 
-    public String toString(){
-      return "[Object]"  ;
-    } 
+    @Column(name = "imagePath", unique = false, nullable = false)
+    String year;
+    @Column(name = "driverId", unique = false, nullable = false)
+    Integer driverId;
 }

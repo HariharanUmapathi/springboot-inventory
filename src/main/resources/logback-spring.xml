@@ -1,0 +1,16 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <!-- Appender to log to a file -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>logs/myapp.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define the root logger -->
+    <root level="INFO">
+        <appender-ref ref="file" />
+    </root>
+</configuration>
