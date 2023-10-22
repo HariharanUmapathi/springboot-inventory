@@ -8,5 +8,4 @@ import com.drivers.application.model.User;
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {
 
-    public User findByName(String name);
 }

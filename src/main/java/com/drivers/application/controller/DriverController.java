@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,52 +33,18 @@ public class DriverController {
     @Autowired
     RandomUserService randomUserService;
     @Autowired
+    OpenRouteService openRouteService;
+    @Autowired
     DriverRepo repo;
     @Autowired
     UserRepo userRepo;
-    @Autowired
-    OpenRouteService openRouteService;
+
     final Logger logger = LoggerFactory.getLogger(DriverController.class);
 
     @GetMapping("/driver/")
     public String index() {
+        logger.error("Responed Success");
         return "Spring Boot Taxi Management System Version 1.0.0";
-    }
-
-    @GetMapping("/driver/api/v1/auth")
-    @ResponseBody
-    public Object authenticate_fallback() {
-        Map<String, Object> message = new HashMap<String, Object>();
-        message.put("message", "Invalid Method");
-        message.put("errorCode", 400);
-        return message;
-    }
-
-    @PostMapping("/driver/api/v1/auth")
-    @ResponseBody
-    public Object authenticate(@RequestBody Map<String, Object> payload) {
-        try {
-            String username = (String) payload.get("username");
-            String password = (String) payload.get("password");
-            User user = userRepo.findByName(username);
-            Boolean isVerificationSuccess = user.verifyPassword(password);
-            logger.info("Verification Success  :" + isVerificationSuccess);
-            System.out.println(user);
-            Map<String, Object> message = new HashMap<String, Object>();
-            if (user == null)
-                message.put("message", "User Not Found");
-            return message;
-        } catch (NullPointerException e) {
-            logger.debug("Exception" + e.getMessage());
-            Map<String, Object> message = new HashMap<String, Object>();
-            message.put("message", "User Not Found");
-            return message;
-        } catch (Exception e) {
-            logger.debug("Exception" + e.getMessage());
-            Map<String, Object> message = new HashMap<String, Object>();
-            message.put("message", "Invalid Credentials");
-            return message;
-        }
     }
 
     @PostMapping("/driver/api/v1/user/create")

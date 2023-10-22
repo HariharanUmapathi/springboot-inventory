@@ -15,29 +15,55 @@ import jakarta.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "Users")
+
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId", unique = true, nullable = false)
     Integer userId;
-    @Column(name = "name", unique = false, nullable = false)
-    String name;
+    @Column(name = "lastName", unique = false, nullable = false)
+    String lastName;
+    @Column(name = "firstName", unique = false, nullable = false)
+    String firstName;
+    @Column(name = "email", unique = false, nullable = false)
+    String email;
     @Column(name = "password", unique = false, nullable = false)
     String password;
+    @Column(name = "mobile", unique = false, nullable = false)
+    String mobile;
+
+    public User(String mobile, String password) {
+        this.mobile = mobile;
+        try {
+            this.password = this.setPassword(password);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public Integer getUserId() {
         return this.userId;
     }
 
     public String getName() {
-        return this.name;
+        return this.lastName;
+    }
+
+    public void setName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String setPassword(String rawPassword) throws NoSuchAlgorithmException {
@@ -60,8 +86,4 @@ public class User implements Serializable {
         return this.password.compareTo(verificationPassword) == 0;
     }
 
-    @Override
-    public String toString() {
-        return "[" + this.userId + "," + this.name + "]";
-    }
 }
