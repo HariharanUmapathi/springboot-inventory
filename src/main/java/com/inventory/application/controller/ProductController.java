@@ -1,4 +1,4 @@
-package com.drivers.application.controller;
+package com.inventory.application.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.drivers.application.dao.ProductRepo;
-import com.drivers.application.model.Product;
+import com.inventory.application.dao.ProductRepo;
+import com.inventory.application.model.Product;
 
 @RestController
 public class ProductController {
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping("/product")
-    public HashMap<String, Object> addProduct(@RequestParam Map<String,String> requestParams) {
+    public HashMap<String, Object> addProduct(@RequestParam Map<String, String> requestParams) {
         System.out.println(requestParams.entrySet());
         // Using Has map for Response sending purpose
         HashMap<String, Object> map = new HashMap<>();

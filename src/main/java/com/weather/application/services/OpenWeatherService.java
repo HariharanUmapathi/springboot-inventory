@@ -1,11 +1,13 @@
-package com.drivers.application.services;
+package com.weather.application.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OpenWeatherService {
-    final private static String OPEN_WEATHER_API_KEY = "";
+    @Value("{openweather.apikey}")
+    final private String OPEN_WEATHER_API_KEY;
     final private static String GEO_CODING_API_URL = "http://api.openweathermap.org/geo/1.0/";
     final private static String OPEN_WEATHER_API_3_0 = "https://api.openweathermap.org/data/3.0/";
     final private static String OPEN_WEATHER_API_2_5 = "http://api.openweathermap.org/data/2.5/";
