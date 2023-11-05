@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 public class RandomUserService {
     final private static String RANDOM_USER_API_URL = "https://randomuser.me/api/?inc=gender,name,nat,picture&results=1000";
 
+    @SuppressWarnings("unchecked")
     public Map<String, Object> getUserData() {
         RestTemplate webClient = new RestTemplate();
         Map<String, Object> result = webClient.getForObject(RANDOM_USER_API_URL, Map.class);

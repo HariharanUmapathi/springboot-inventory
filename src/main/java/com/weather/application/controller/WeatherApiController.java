@@ -1,11 +1,11 @@
-package com.weather.controller;
+package com.weather.application.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.weather.services.OpenWeatherService;
+import com.weather.application.services.OpenWeatherService;
 
 @RestController
 class WeatherApiController {

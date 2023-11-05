@@ -97,7 +97,7 @@ public class DriverController {
 
     @GetMapping("/driver/api/v1/driver/{:id}")
     @ResponseBody
-    public Driver list_driver_json(@PathVariable int id) {
+    public Driver list_driver_json(@PathVariable Integer id) {
         try {
             System.out.println(id);
             return repo.getReferenceById(id);

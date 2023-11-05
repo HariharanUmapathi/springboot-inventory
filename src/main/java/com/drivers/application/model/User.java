@@ -1,20 +1,28 @@
 package com.drivers.application.model;
 
-import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import java.util.Collection;
+import java.util.Collections;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,17 +31,21 @@ import lombok.ToString;
 @Getter
 @Setter
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "Users")
 
-public class User implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId", unique = true, nullable = false)
     Integer userId;
+    @Column(name = "username", unique = false, nullable = true)
+    public String username;
     @Column(name = "lastName", unique = false, nullable = false)
     String lastName;
     @Column(name = "firstName", unique = false, nullable = false)
@@ -42,17 +54,18 @@ public class User implements Serializable {
     String email;
     @Column(name = "password", unique = false, nullable = false)
     String password;
-    @Column(name = "mobile", unique = false, nullable = false)
+    @Column(name = "mobile", unique = false, nullable = true)
     String mobile;
-
-    public User(String mobile, String password) {
-        this.mobile = mobile;
-        try {
-            this.password = this.setPassword(password);
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Column(name = "account_non_expired", unique = false, nullable = true)
+    private boolean accountNonExpired;
+    @Column(name = "account_non_locked", unique = false, nullable = true)
+    private boolean accountNonLocked;
+    @Column(name = "credentials_non_expired", unique = false, nullable = true)
+    private boolean credentialsNonExpired;
+    @Column(name = "enabled", unique = false, nullable = true)
+    private boolean enabled;
 
     public Integer getUserId() {
         return this.userId;
@@ -84,6 +97,43 @@ public class User implements Serializable {
         md.update(salt.getBytes());
         String verificationPassword = new String(md.digest(rawPassword.getBytes(StandardCharsets.UTF_8)));
         return this.password.compareTo(verificationPassword) == 0;
+    }
+    // UserDetails Methods Implementation
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // You can customize this to return a list of user roles/authorities
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
 }
