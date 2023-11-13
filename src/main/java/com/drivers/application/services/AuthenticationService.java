@@ -31,7 +31,7 @@ public class AuthenticationService {
                 .role(Role.USER).build();
         userRepository.save(user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).error("").build();
+        return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
     public JwtAuthenticationResponse signin(SigninRequest request) {
@@ -43,6 +43,6 @@ public class AuthenticationService {
         Map<String, Object> payload = new HashMap<>();
         payload.put("username", user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).error("").build();
+        return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 }

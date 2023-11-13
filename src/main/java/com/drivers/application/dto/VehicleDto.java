@@ -17,15 +17,18 @@ import lombok.Data;
 public class VehicleDto {
     private boolean assigned;
     private boolean maintainance;
-    @NotBlank
-    @NotEmpty(message = "Register No Should Not Blank")
-
+    @NotBlank(message = "Register No Should Not Blank")
+    @NotEmpty(message = "Register No Should Not Empty")
     private String registerNo;
     private String type;
     private String imagePath;
+    private String make;
+    private String modal;
 
     public Vehicle toVehicle() {
         return new Vehicle()
+                .setMake(make)
+                .setModal(modal)
                 .setType(type)
                 .setRegisterNo(registerNo)
                 .setImagePath("")

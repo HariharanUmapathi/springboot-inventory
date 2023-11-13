@@ -40,7 +40,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         body.put("errors", errors);
 
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>(body, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -55,14 +55,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Order(1)
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> constraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        List<String> errors = new ArrayList<>();
+        Map<String, Object> errors = new HashMap<>();
 
-        ex.getConstraintViolations().forEach(cv -> errors.add(cv.getMessage()));
+        ex.getConstraintViolations().forEach(cv -> errors.put("msg", cv.getMessage()));
 
-        Map<String, List<String>> result = new HashMap<>();
-        result.put("errors", errors);
-
-        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @Order(2)
@@ -80,6 +77,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<?> DataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
         Map<String, Object> result = new HashMap<>();
         result.put("errors", "Got Error in our service please try again after some time");
+        result.put("exception", ex.getMessage());
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
 
     }

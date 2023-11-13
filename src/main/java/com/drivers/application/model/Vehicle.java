@@ -27,7 +27,7 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "vehicleId", unique = true, nullable = false)
     Integer vehicleId;
-    @Column(name = "registerNo", unique = false, nullable = false)
+    @Column(name = "registerNo", unique = true, nullable = false)
     String registerNo;
     @Column(name = "make")
     String make;

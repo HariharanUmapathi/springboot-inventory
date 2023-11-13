@@ -3,11 +3,17 @@ package com.drivers.application.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.drivers.application.services.ExcelImportService;
+
 @RestController
 public class DefaultController {
+    @Autowired
+    ExcelImportService excelImportService;
+
     @GetMapping("/")
     public Map<String, Object> index() {
         Map<String, Object> applicationURIS = new HashMap<String, Object>();
@@ -23,5 +29,11 @@ public class DefaultController {
                 "WeatherApplication");
         applicationInfo.put("api_URI", applicationURIS);
         return applicationInfo;
+    }
+
+    @GetMapping("/locations-import")
+    public String locations_import() {
+        excelImportService.importServiceAreas();
+        return excelImportService.doNothing();
     }
 }
