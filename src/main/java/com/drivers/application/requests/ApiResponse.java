@@ -2,8 +2,6 @@ package com.drivers.application.requests;
 
 import java.util.Collection;
 
-import org.springframework.context.annotation.Bean;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
