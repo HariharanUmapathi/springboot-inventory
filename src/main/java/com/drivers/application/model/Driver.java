@@ -26,25 +26,13 @@ public class Driver implements Serializable {
     @Column(name = "name", unique = false, nullable = false)
     String name;
     @Column(name = "experience", unique = false, nullable = false)
-    String year;
+    String experience;
     @Column(name = "onduty", unique = false, nullable = false)
     Boolean onduty;
     @Column(name = "perkmrate", unique = false, nullable = false)
     Double perKMRate;
-    @Column(name= "vehicleid",unique=true,nullable=true)
+    @Column(name= "vehicleid",unique=false,nullable=true)
     Integer vehicleId;
-    public Integer getDriverId() {
-        return this.driverId;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Driver(int driverId, String driverName) {
-        this.driverId = driverId;
-        this.name = driverName;
-    }
     @Override
     public String toString() {
         return "[Object]";
