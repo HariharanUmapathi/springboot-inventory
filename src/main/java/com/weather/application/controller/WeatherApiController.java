@@ -16,5 +16,17 @@ class WeatherApiController {
     public String getWeather(@PathVariable String city) {
         return service.getWeather(city);
     }
-
+    @GetMapping("/test/{test}")
+    public String getTest(@PathVariable String test){
+        System.out.println(test);
+        return test;
+    }
+    @GetMapping("/weather/{test}")
+    public String weatherHome(@PathVariable String test){
+        return "Hi from controller weather";
+    }
+    @GetMapping("/error")
+    public String genericErrorMessage(){
+        return "Something Went wrong Please bear with Smile we will be back soon";
+    }
 }

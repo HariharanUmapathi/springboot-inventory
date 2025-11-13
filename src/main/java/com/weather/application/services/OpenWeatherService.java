@@ -2,11 +2,13 @@ package com.weather.application.services;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OpenWeatherService {
-    @Value("{openweather.apikey}")
+    @Value("${openweather.apikey}")
     private String OPEN_WEATHER_API_KEY;
     final private static String GEO_CODING_API_URL = "http://api.openweathermap.org/geo/1.0/";
     final private static String OPEN_WEATHER_API_2_5 = "http://api.openweathermap.org/data/2.5/";
@@ -18,9 +20,15 @@ public class OpenWeatherService {
     public String getWeather(String city) {
         // http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7cb48abb2df464dbe3158862813570ac
         RestTemplate webClient = new RestTemplate();
+        try{
         String result = webClient.getForObject(
                 OPEN_WEATHER_API_2_5 + "weather?q=" + city + ",In&appid=" + OPEN_WEATHER_API_KEY, String.class);
         return result;
+
+        } catch (HttpClientErrorException e){
+            System.out.println(e.getMessage());
+            return "No Matching Results found";
+        }
     }
 
     public Object[] getGeoCodingHandle(String city) {
